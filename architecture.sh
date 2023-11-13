@@ -27,11 +27,6 @@ REPO="bootcamp-devops-2023"
 PKG=("php libapache2-mod-php php-mysql" "php-mbstring" "php-mbstring" "php-zip" "php-gd" "php-json" "php-curl" "apache2" "git" "mariadb-server" "libapache2-mod-php" ) 
 servicios=("apache2" "mariadb")
 
-# Datos de Configuración de MariaDB
-DB_USER="tu_usuario"
-DB_PASSWORD="tu_contraseña"
-DB_NAME="tu_base_de_datos"
-
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ################################################################################
@@ -124,3 +119,18 @@ echo "<?php phpinfo(); ?>" | sudo tee /var/www/html/info.php > /dev/null
 ##     Configuración de MariaDB   ##
 ####################################
 
+echo "Ingrese el usuario: "
+read DB_USER
+echo "Ingrese la contraseña: "
+read DB_PASSWORD
+echo "Ingrese el nombre de la base de datos: "
+read DB_NAME
+#devopstravel
+ 
+$mysql
+MariaDB > CREATE DATABASE $DB_NAME;
+MariaDB > CREATE USER $DB_USER@'localhost' IDENTIFIED BY $DB_PASSWORD;
+MariaDB > GRANT ALL PRIVILEGES ON *.* TO $DB_USER@'localhost';
+MariaDB > FLUSH PRIVILEGES;
+
+mysql < database/$DB_NAME.sql
